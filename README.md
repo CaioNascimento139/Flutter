@@ -1,4 +1,4 @@
-# trabalho01
+# 2BimAtividade1
 import 'package:flutter/material.dart';
 
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
@@ -30,7 +30,7 @@ class MyWidget extends StatelessWidget {
         decoration: BoxDecoration(
             image: const DecorationImage(
                 image: NetworkImage(
-                    'https://files.muzli.space/7200787b0b61ef626e55280533973e4b.jpeg')),
+                    'https://i1.sndcdn.com/artworks-6fLoqjecGheizi75-1bVkKg-t500x500.jpg')),
             borderRadius: BorderRadius.circular(40)),
         width: 500,
         height: 500,
@@ -53,13 +53,13 @@ class MyWidget extends StatelessWidget {
             )
           ]),
           const SizedBox(height: 140),
-          const Text('blá blá',
+          const Text('ELDEN RING, developed by FromSoftware, is a set fantasy action RPG adventure. ',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           Row(children: [
-            Icon(Icons.circle, color: Colors.grey[900], size: 30),
+            Icon(Icons.circle, color: Colors.grey[900], size: 40),
             Column(children: const [
-              Text('BRA', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('USA', style: TextStyle(fontWeight: FontWeight.bold)),
               Text('TODAY', style: TextStyle(fontWeight: FontWeight.bold)),
             ]),
             const SizedBox(width: 310),
@@ -73,7 +73,7 @@ class MyWidget extends StatelessWidget {
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
-                Text('Mary Wilton',
+                Text('Caio Nascimento',
                     style: TextStyle(
                       fontSize: 15,
                     )),
@@ -91,7 +91,7 @@ class MyWidget extends StatelessWidget {
                   color: Colors.white,
                   size: 3.0,
                 ),
-                Text('54 Upvote',
+                Text('1,2k Upvote',
                     style: TextStyle(
                       fontSize: 15,
                     ))
@@ -99,3 +99,4 @@ class MyWidget extends StatelessWidget {
         ]));
   }
 }
+
