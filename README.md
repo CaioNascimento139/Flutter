@@ -1,4 +1,3 @@
-# 2BimAtividade1
 import 'package:flutter/material.dart';
 
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
@@ -53,14 +52,15 @@ class MyWidget extends StatelessWidget {
             )
           ]),
           const SizedBox(height: 140),
-          const Text('ELDEN RING, developed by FromSoftware, is a set fantasy action RPG adventure. ',
+          const Text(
+              'ELDEN RING, developed by FromSoftware, is a set fantasy action RPG adventure. ',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           Row(children: [
             Icon(Icons.circle, color: Colors.grey[900], size: 40),
             Column(children: const [
-              Text('USA', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('TODAY', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('BRA', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('     TODAY', style: TextStyle(fontWeight: FontWeight.bold)),
             ]),
             const SizedBox(width: 310),
             const Text('4h ago',
@@ -99,4 +99,3 @@ class MyWidget extends StatelessWidget {
         ]));
   }
 }
-
