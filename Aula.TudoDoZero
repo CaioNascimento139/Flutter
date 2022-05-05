@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: darkBlue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(
+          child: MyWidget(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(children: [
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.amber,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.pink,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.red,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+      ]),
+      Row(children: [
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.green,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.blue,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.black,
+          width: 48.0,
+          height: 48.0,
+          child: const Text('olá'),
+        ),
+      ]),
+    ]);
+  }
+
+  meuContainer(String nome, Color cor) {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      color: cor,
+      width: 48.0,
+      height: 48.0,
+      child: Text(nome),
+    );
+  }
+}
