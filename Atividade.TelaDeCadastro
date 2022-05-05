@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+
+const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(
+          child: MyWidget(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      const Text('Welcome',
+          style: TextStyle(
+            fontSize: 20,
+          )),
+      const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: TextField(
+          style: TextStyle(color: Colors.black),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Name',
+          ),
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Email',
+          ),
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Password',
+          ),
+        ),
+      ),
+    ]);
+  }
+}
