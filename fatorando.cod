@@ -1,0 +1,205 @@
+import 'package:flutter/material.dart';
+
+const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+BoxDecoration myDecoration(String image, Color color, double radius) {
+  return BoxDecoration(
+      image: DecorationImage(image: NetworkImage(image)),
+      color: color,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(20),
+      ));
+}
+
+const double altura = 90;
+const double largura = 250;
+
+Row myRow() {
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Container(
+          decoration: myDecoration(
+            'https://i.imgur.com/YlTi9me.png',
+            Colors.white,
+            20,
+          ),
+          height: 90,
+          width: 90,
+        ),
+        Container(
+          decoration: myDecoration(
+            'https://i.imgur.com/YlTi9me.png',
+            Colors.white,
+            20,
+          ),
+          height: 90,
+          width: 90,
+        ),
+        Container(
+          decoration: myDecoration(
+            'https://i.imgur.com/YlTi9me.png',
+            Colors.white,
+            20,
+          ),
+          height: 90,
+          width: 90,
+        ),
+        Container(
+          decoration: myDecoration(
+            'https://i.imgur.com/YlTi9me.png',
+            Colors.white,
+            20,
+          ),
+          height: 90,
+          width: 90,
+        ),
+      ]);
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: darkBlue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        body: Center(
+          child: MyWidget(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            decoration: myDecoration(
+              'https://i.imgur.com/YlTi9me.png',
+              Colors.white,
+              20,
+            ),
+            height: altura,
+            width: largura,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  decoration: myDecoration(
+                    'https://i.imgur.com/YlTi9me.png',
+                    Colors.white,
+                    20,
+                  ),
+                  height: 90,
+                  width: 90,
+                ),
+                Container(
+                  decoration: myDecoration(
+                    'https://i.imgur.com/YlTi9me.png',
+                    Colors.white,
+                    20,
+                  ),
+                  height: 90,
+                  width: 90,
+                ),
+              ]),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            decoration: myDecoration(
+              'https://i.imgur.com/YlTi9me.png',
+              Colors.white,
+              20,
+            ),
+            height: 90,
+            width: 250,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          myRow(),
+          myRow(),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            decoration: myDecoration(
+              'https://i.imgur.com/YlTi9me.png',
+              Colors.white,
+              20,
+            ),
+            height: 250,
+            width: 350,
+            child: Column(children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      decoration: myDecoration(
+                        'https://i.imgur.com/YlTi9me.png',
+                        Colors.white,
+                        20,
+                      ),
+                      height: 90,
+                      width: 90,
+                    ),
+                    Container(
+                      decoration: myDecoration(
+                        'https://i.imgur.com/YlTi9me.png',
+                        Colors.white,
+                        20,
+                      ),
+                      height: 90,
+                      width: 90,
+                    ),
+                  ]),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      decoration: myDecoration(
+                        'https://i.imgur.com/YlTi9me.png',
+                        Colors.white,
+                        20,
+                      ),
+                      height: 90,
+                      width: 90,
+                    ),
+                    Container(
+                      decoration: myDecoration(
+                        'https://i.imgur.com/YlTi9me.png',
+                        Colors.white,
+                        20,
+                      ),
+                      height: 90,
+                      width: 90,
+                    ),
+                  ]),
+            ]),
+          ),
+        ]);
+  }
+}
