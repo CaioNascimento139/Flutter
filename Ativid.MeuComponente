@@ -45,9 +45,19 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[MyCard(), MyCard()],
+        child: ListView(
+          children: <Widget>[
+            Mycard(
+              nome: "  CAIO NASCIMENTO",
+              telefone: "  (11) 97070-7070",
+              email: "  caio@gmail.com",
+            ),
+            Mycard(
+              nome: "  CAIO NASCIMENTO",
+              telefone: "  (11) 97070-7070",
+              email: "  caio@gmail.com",
+            ),
+          ],
         ),
       ),
     );
@@ -56,14 +66,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
 import 'package:flutter/material.dart';
 
-class MyCard extends StatefulWidget {
-  const MyCard({Key? key}) : super(key: key);
+/*
+Nós podemos receber os parametros de forma dinamica!!
 
-  @override
-  State<MyCard> createState() => _MyCardState();
-}
+Primeiro, utilizamos a palavra chave "final"
+Depois o tipo de dado: String, int, ...
+Por ultimo o nome que queremos dar
 
-class _MyCardState extends State<MyCard> {
+final string nome;
+
+*/
+
+class Mycard extends StatelessWidget {
+  const Mycard({
+    Key? key,
+    this.nome,
+    this.telefone,
+    this.email,
+  }) : super(key: key);
+
+  final String? nome;
+  final String? telefone;
+  final String? email;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,10 +108,10 @@ class _MyCardState extends State<MyCard> {
             height: 90,
             width: 90,
           ),
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-            Text('NOME:', style: TextStyle(color: Colors.black)),
-            Text('TELEFONE:', style: TextStyle(color: Colors.black)),
-            Text('EMAIL:', style: TextStyle(color: Colors.black)),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text("NOME:" + nome!, style: TextStyle(color: Colors.black)),
+            Text("TELEFONE:" + telefone!, style: TextStyle(color: Colors.black)),
+            Text("EMAIL:" + email!, style: TextStyle(color: Colors.black)),
           ]),
         ]),
         const SizedBox(
