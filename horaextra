@@ -1,0 +1,139 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: const MyHomePage(title: 'Calcular Hora Extra'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String infoText = "Informe os valores";
+
+  final TextEditingController _salarioPorHora = TextEditingController();
+  final TextEditingController _horaExtra = TextEditingController();
+
+  String? valor;
+
+  String calculaSalario(double salarioPorHora, double horasExtra) {
+    var meuSalario = salarioPorHora * 160;
+
+    if (horasExtra == 160) {
+      return (meuSalario).toString();
+    } else if (horasExtra < 160) {
+      return (horasExtra * salarioPorHora).toString();
+    } else {
+      var extra = (horasExtra - 160) * 1.5;
+
+      var valorTotal = (extra * salarioPorHora) + meuSalario;
+
+      return valorTotal.toString();
+    }
+  }
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              infoText,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _salarioPorHora,
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Salario por Hora',
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _horaExtra,
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Hora extra',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                valor = calculaSalario(
+                  double.parse(_salarioPorHora.text),
+                  double.parse(_horaExtra.text),
+                );
+              });
+            },
+            child: Text(
+              "Calcular",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Text(
+            valor ?? 'Resultado',
+          ),
+        ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
