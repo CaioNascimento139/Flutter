@@ -1,0 +1,237 @@
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_2/lista.dart';
+import 'package:http/http.dart' as http;
+
+Future<http.Response> pegarDados(String title) async {
+  var resposta = await http.get(
+    Uri.parse('http://10.0.3.132:1313/listar-alunos'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  print(resposta.body.toString());
+
+  return resposta;
+}
+
+Future<http.Response> enviarDados(
+    String nome, String email, String turma, String telefone) async {
+  final envio = await http.post(
+    Uri.parse('http://10.0.3.132:1313/save-data'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'nome': nome,
+      'email': email,
+      'telefone': telefone,
+      'turma': turma,
+    }),
+  );
+
+  print(envio.body.toString());
+  return envio;
+}
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: Lista(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  final TextEditingController nome = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController telefone = TextEditingController();
+  final TextEditingController turma = TextEditingController();
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TextField(
+                controller: nome,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Nome',
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TextField(
+                controller: email,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TextField(
+                controller: telefone,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Telefone',
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TextField(
+                controller: turma,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Turma',
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                enviarDados(
+                  nome.text,
+                  email.text,
+                  telefone.text,
+                  turma.text,
+                );
+              },
+              child: Text('Enviar Dados'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+..................................................
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_2/main.dart';
+
+class Lista extends StatefulWidget {
+  const Lista({Key? key}) : super(key: key);
+
+  @override
+  State<Lista> createState() => _ListaState();
+}
+
+final List<String> entries = <String>['A', 'B', 'C'];
+final List<int> colorCodes = <int>[600, 500, 100];
+
+class _ListaState extends State<Lista> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    var dados = pegarDados('');
+
+//print(dados.length().toString());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Lista'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(
+                        title: 'Enviar Dados',
+                      )),
+            );
+          },
+          backgroundColor: Colors.red,
+          child: const Icon(Icons.add),
+        ),
+        body: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: entries.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 50,
+                color: Colors.amber[colorCodes[index]],
+                child: Center(child: Text('Entry ${entries[index]}')),
+              );
+            }),
+      ),
+    );
+  }
+}
+
+........................................................................
+
+class User {
+  String nome;
+  String email;
+  String turma;
+  String telefone;
+
+  User(
+    this.nome,
+    this.email,
+    this.turma,
+    this.telefone,
+  );
+
+  factory User.fromJson(dynamic json) {
+    return User(json['nome'] as String, json['email'] as String,
+        json['turma'] as String, json['telefone'] as String);
+  }
+
+  @override
+  String toString() {
+    return '{ ${this.nome}, ${this.email}, ${this.turma}, ${telefone} }';
+  }
+}
