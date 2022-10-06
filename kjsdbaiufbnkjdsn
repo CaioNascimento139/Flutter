@@ -1,21 +1,25 @@
+MAIN.DART
+
 import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/lista.dart';
+import 'package:flutter_application_2/user.dart';
 import 'package:http/http.dart' as http;
 
-Future<http.Response> pegarDados(String title) async {
+Future<List<User>> pegarDados() async {
+  List<User> todosUsers = [];
   var resposta = await http.get(
     Uri.parse('http://10.0.3.132:1313/listar-alunos'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
+  var dadosUser = json.decode(resposta.body);
+  dadosUser.forEach((user) => {todosUsers.add(User.fromJson(user))});
 
-  print(resposta.body.toString());
-
-  return resposta;
+  return todosUsers;
 }
 
 Future<http.Response> enviarDados(
@@ -83,76 +87,81 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: nome,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nome',
+      body: ListView(children: [
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: nome,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nome',
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: email,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: email,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: telefone,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Telefone',
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: telefone,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Telefone',
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: turma,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Turma',
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: turma,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Turma',
+                  ),
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                enviarDados(
-                  nome.text,
-                  email.text,
-                  telefone.text,
-                  turma.text,
-                );
-              },
-              child: Text('Enviar Dados'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  enviarDados(
+                    nome.text,
+                    email.text,
+                    telefone.text,
+                    turma.text,
+                  );
+                  setState(() {});
+                },
+                child: Text('Enviar Dados'),
+              ),
+            ],
+          ),
         ),
-      ),
+      ]),
     );
   }
 }
-..................................................
+....................................................................................
+LISTA.DART
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/main.dart';
+import 'package:flutter_application_2/user.dart';
 
 class Lista extends StatefulWidget {
   const Lista({Key? key}) : super(key: key);
@@ -164,70 +173,98 @@ class Lista extends StatefulWidget {
 final List<String> entries = <String>['A', 'B', 'C'];
 final List<int> colorCodes = <int>[600, 500, 100];
 
+List<User> dadosUser = [];
+
 class _ListaState extends State<Lista> {
   @override
   void initState() {
     // TODO: implement initState
 
-    var dados = pegarDados('');
-
-//print(dados.length().toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Lista'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyHomePage(
-                        title: 'Enviar Dados',
-                      )),
-            );
-          },
-          backgroundColor: Colors.red,
-          child: const Icon(Icons.add),
-        ),
-        body: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: 50,
-                color: Colors.amber[colorCodes[index]],
-                child: Center(child: Text('Entry ${entries[index]}')),
-              );
-            }),
-      ),
-    );
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text('Lista'),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                            title: 'Enviar Dados',
+                          )),
+                );
+              },
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.add),
+            ),
+            body: FutureBuilder<List<User>>(
+              future: pegarDados(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return Container();
+                }
+
+                return ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        // height: 50,
+                        color: Colors.red,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                snapshot.data![index].avatar,
+                              ),
+                            ),
+                            Text(snapshot.data![index].nome),
+                            Text(snapshot.data![index].email),
+                            Text(snapshot.data![index].telefone),
+                            Text(snapshot.data![index].turma),
+                          ],
+                        ),
+                      );
+                    });
+              },
+            )));
   }
 }
-
-........................................................................
+.............................................................................
+USER.DART
 
 class User {
   String nome;
   String email;
   String turma;
   String telefone;
+  String avatar;
 
   User(
     this.nome,
     this.email,
     this.turma,
     this.telefone,
+    this.avatar,
   );
 
   factory User.fromJson(dynamic json) {
-    return User(json['nome'] as String, json['email'] as String,
-        json['turma'] as String, json['telefone'] as String);
+    return User(
+        json['nome'] as String,
+        json['email'] as String,
+        json['telefone'] as String,
+        json['turma'] as String,
+        json['avatar'] ??
+            'https://sm.ign.com/t/ign_br/news/n/new-avatar/new-avatar-the-last-airbender-console-game-seemingly-leaks_v1w9.h720.jpg');
   }
 
   @override
